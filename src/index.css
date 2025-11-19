@@ -15,15 +15,35 @@
   html {
     font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
+    scroll-behavior: auto; /* we handle inertia via RAF */
   }
 
   body {
-    @apply antialiased;
+    @apply antialiased bg-black text-white;
   }
 }
 
-/* Custom utility classes for shadcn/ui patterns */
+/* GPU-friendly parallax + reveal + glow utilities */
 @layer utilities {
+  [data-parallax] {
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  .glow-responsive {
+    filter: brightness(var(--glow-brightness, 1));
+    transition: filter 120ms linear;
+  }
+  .neon-shadow {
+    box-shadow: 0 0 calc(70px * var(--glow-strength, 0.55)) rgba(255,165,89,0.45);
+  }
+
+  .reveal { opacity: 0; transform: translate3d(0, 16px, 0); }
+  .reveal.inview { opacity: 1; transform: translate3d(0,0,0); }
+  .reveal, .reveal * { transition: opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1); }
+
   .animate-in {
     animation-name: animateIn;
     animation-duration: 350ms;

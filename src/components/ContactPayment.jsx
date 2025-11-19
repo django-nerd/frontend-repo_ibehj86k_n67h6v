@@ -42,7 +42,7 @@ export default function ContactPayment() {
   return (
     <section id="contact" className="relative bg-gradient-to-b from-[#0b0e13] to-black text-white px-6 md:px-12 py-24">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-start">
-        <div>
+        <div data-parallax data-depth="0.02" className="reveal">
           <h2 className="text-3xl md:text-4xl font-extrabold">Get in touch</h2>
           <p className="text-slate-400 mt-2">Questions about the curriculum, cohorts, or team training? Drop us a note.</p>
 
@@ -62,7 +62,7 @@ export default function ContactPayment() {
           {status && <div className="mt-4 text-sm text-slate-300">{status}</div>}
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 glow-responsive reveal" data-parallax data-depth="0.03">
           <h3 className="font-semibold text-lg">What’s inside Ascendia</h3>
           <ul className="mt-4 space-y-3 text-slate-300 text-sm">
             <li>• On-demand lessons + live workshops</li>

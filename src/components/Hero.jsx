@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Spline from '@splinetool/react-spline'
 
@@ -14,9 +14,9 @@ export default function Hero({ onCTAClick }) {
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] })
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -200])
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.6])
-  const glow = useTransform(scrollYProgress, [0, 1], [0.4, 0.9])
+  // Use framer only for small hero-local offsets; main parallax handled by engine
+  const y = useTransform(scrollYProgress, [0, 1], [0, -80])
+  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.8])
 
   useEffect(() => {
     const id = setInterval(() => setTagIndex((i) => (i + 1) % TAGLINES.length), 2600)
@@ -25,21 +25,24 @@ export default function Hero({ onCTAClick }) {
 
   return (
     <section ref={containerRef} className="relative min-h-[110vh] overflow-hidden bg-black text-white">
-      {/* Gradient and grid overlays for depth */}
+      {/* Depth grid + gradient */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(39,55,77,0.35),transparent_60%)]" />
-        <div className="absolute inset-0 opacity-20" style={{backgroundImage:'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize:'40px 40px'}} />
+        <div data-parallax data-depth="-0.06" className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(39,55,77,0.35),transparent_60%)]" />
+        <div data-parallax data-depth="-0.1" className="absolute inset-0 opacity-20"
+             style={{backgroundImage:'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize:'40px 40px'}} />
       </div>
 
       {/* 3D Spline Scene */}
       <motion.div style={{ y, opacity }} className="relative h-[70vh] md:h-[80vh]">
-        <Spline scene="https://prod.spline.design/41MGRk-UDPKO-l6W/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        <div data-parallax data-depth="0.08" className="w-full h-full">
+          <Spline scene="https://prod.spline.design/41MGRk-UDPKO-l6W/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        </div>
       </motion.div>
 
       {/* Headline and CTA layer */}
       <motion.div style={{ y }} className="relative z-10 -mt-20 px-6 md:px-12">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <div>
+          <div data-parallax data-depth="0.04" className="glow-responsive">
             <motion.h1 initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:0.8}}
               className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
               Ascendia
@@ -68,11 +71,11 @@ export default function Hero({ onCTAClick }) {
           </div>
 
           <div className="hidden md:block">
-            <div className="relative rounded-3xl p-6 bg-white/5 border border-white/10 backdrop-blur-xl">
-              <div className="absolute inset-0 rounded-3xl" style={{boxShadow:`0 0 80px rgba(73,85,121,${glow.get()})`}} />
+            <div className="relative rounded-3xl p-6 bg-white/5 border border-white/10 backdrop-blur-xl glow-responsive" style={{filter:'brightness(var(--glow-brightness,1))'}}>
+              <div className="absolute inset-0 rounded-3xl neon-shadow pointer-events-none" />
               <div className="relative grid grid-cols-2 gap-4 text-sm text-slate-200">
                 {["Meta Ads", "Google Ads", "Attribution", "GA4", "SEO", "CRO", "Email", "Automation"].map((k)=> (
-                  <div key={k} className="rounded-lg border border-white/10 bg-[#27374D]/30 px-3 py-2 text-center">
+                  <div key={k} className="rounded-lg border border-white/10 bg-[#27374D]/30 px-3 py-2 text-center reveal">
                     {k}
                   </div>
                 ))}

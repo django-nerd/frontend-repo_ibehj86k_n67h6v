@@ -32,10 +32,10 @@ export default function FeaturedCourses({ onCheckout }) {
 
         <div className="grid md:grid-cols-3 gap-6">
           {courses.map((c, i) => (
-            <motion.div key={c.title} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:i*0.1}}
-              className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+            <motion.div key={c.title} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:i*0.08}}
+              className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 reveal" data-parallax data-depth={(i%2===0?0.03:0.02).toString()}>
               <div className="absolute inset-0" style={{background:`radial-gradient(circle at 30% -10%, ${c.color}33, transparent 60%)`}} />
-              <div className="relative p-6 flex flex-col h-full">
+              <div className="relative p-6 flex flex-col h-full glow-responsive">
                 <div className="text-xs uppercase tracking-wider text-white/70">Ascendia Course</div>
                 <h3 className="text-xl font-bold mt-2">{c.title}</h3>
                 <span className="mt-2 inline-block text-xs text-black font-semibold bg-[#FFA559] px-2 py-1 rounded-full w-fit">{c.badge}</span>

@@ -1,13 +1,20 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Hero from './components/Hero'
 import FeaturedCourses from './components/FeaturedCourses'
 import WhyChooseUs from './components/WhyChooseUs'
 import Testimonials from './components/Testimonials'
 import ContactPayment from './components/ContactPayment'
 import Footer from './components/Footer'
+import { initParallax } from './lib/parallax'
 
 function App() {
   const contactRef = useRef(null)
+
+  useEffect(() => {
+    // initialize site-wide parallax and smooth inertia
+    const cleanup = initParallax({ smooth: 0.12 })
+    return () => cleanup && cleanup()
+  }, [])
 
   const scrollToContact = () => {
     const el = document.getElementById('contact')
@@ -32,9 +39,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Subtle background decorations */}
-      <div className="pointer-events-none fixed inset-0 opacity-60" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#27374D33,transparent_40%),radial-gradient(circle_at_80%_40%,#49557933,transparent_40%),radial-gradient(circle_at_50%_80%,#FFA55922,transparent_40%)]" />
+      {/* Parallax background layers */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 opacity-60">
+        <div data-parallax data-depth="-0.02" data-z="0" className="absolute inset-0"
+             style={{background:
+               'radial-gradient(circle_at_20%_20%,#27374D33,transparent_40%),radial-gradient(circle_at_80%_40%,#49557933,transparent_40%),radial-gradient(circle_at_50%_80%,#FFA55922,transparent_40%)'}} />
       </div>
 
       <Hero onCTAClick={scrollToContact} />

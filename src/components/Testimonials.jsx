@@ -17,8 +17,8 @@ export default function Testimonials() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
-            <motion.div key={t.name} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:i*0.1}}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <motion.div key={t.name} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:i*0.08}}
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 reveal glow-responsive" data-parallax data-depth={(i===1?0.03:0.02).toString()}>
               <p className="text-slate-200">“{t.quote}”</p>
               <div className="mt-4 text-sm text-slate-400">{t.name} • {t.role}</div>
             </motion.div>

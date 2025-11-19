@@ -19,7 +19,7 @@ export default function WhyChooseUs() {
         <div className="grid md:grid-cols-4 gap-6">
           {features.map((f, i) => (
             <motion.div key={f.title} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:i*0.05}}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 reveal glow-responsive" data-parallax data-depth={(0.015 + i*0.005).toString()}>
               <f.icon className="w-8 h-8 text-[#FFA559]" />
               <h3 className="mt-4 font-semibold text-lg">{f.title}</h3>
               <p className="text-slate-300 text-sm mt-2">{f.desc}</p>
